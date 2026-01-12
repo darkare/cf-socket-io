@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import cloudflareLogo from './assets/Cloudflare_Logo.svg'
 import './App.css'
+import SocketPage from './SocketPage'
 
-function App() {
+function Home() {
   const [count, setCount] = useState(0)
   const [name, setName] = useState('unknown')
 
@@ -36,7 +38,7 @@ function App() {
       <div className='card'>
         <button
           onClick={() => {
-            fetch('/api/')
+            fetch('/api/name')
               .then((res) => res.json() as Promise<{ name: string }>)
               .then((data) => setName(data.name))
           }}
@@ -48,10 +50,26 @@ function App() {
           Edit <code>worker/index.ts</code> to change the name
         </p>
       </div>
+      <div className='card'>
+        <Link to="/socket">
+          <button style={{ background: '#f6821f', color: 'white' }}>
+            Go to Socket Demo
+          </button>
+        </Link>
+      </div>
       <p className='read-the-docs'>
         Click on the Vite and React logos to learn more
       </p>
     </>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/socket" element={<SocketPage />} />
+    </Routes>
   )
 }
 
